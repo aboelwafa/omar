@@ -1,0 +1,43 @@
+
+.586
+.MODEL FLAT
+include io.h
+.STACK 4096
+.DATA
+	promt byte "result is ",0
+	  p1 BYTE "enter x",0
+	  p2 BYTE "enter y",0
+	  p3 BYTE "enter z",0
+	     x DWORD 40 DUP(?)
+		 y DWORD  40 DUP(?)
+		 z DWORD  40 DUP(?)
+		  result DWORD  40 DUP(?)
+.CODE
+MainProc   PROC
+		input p1,result,40
+		atod result
+		mov x,eax
+		input p2,result,40
+		atod result
+		mov y ,eax
+		add eax,x
+		mov y,eax
+		input p3,result,40
+		atod result
+		mov z,eax
+		mov eax,y
+		sub eax,z
+		sub eax,z
+		add eax,1
+		mov z,eax
+		neg z
+		mov eax,z
+		dtoa  result,eax
+		output promt ,result
+      
+	
+	
+mov eax ,0
+RET 
+MainProc   ENDP
+END
