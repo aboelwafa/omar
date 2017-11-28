@@ -1,0 +1,37 @@
+.586
+.MODEL FLAT
+INCLUDE io.h
+.STACK 4096
+.DATA
+promt BYTE "THE VALUE",0
+P1 BYTE "ENER THE NUM",0
+P2 BYTE "ENER THE NUM",0
+P3 BYTE "ENER THE NUM",0
+X DWORD 40 DUP(?)
+Y DWORD 40 DUP(?)
+Z DWORD 40 DUP(?)
+;result DWORD 40 DUP(?)
+sum DWORD 40 DUP(?)
+
+.CODE
+MainProc PROC
+input p1,sum,40
+atod sum
+mov X ,eax
+input p2,sum,40
+atod sum
+mov Y,eax
+add eax,X
+imul eax,2
+mov Y,eax
+input p3,sum,40
+atod sum
+mov z,eax
+mov eax,y
+add eax,z
+dtoa sum,eax
+output promt,sum
+mov eax,0
+ret
+MainProc ENDP
+END

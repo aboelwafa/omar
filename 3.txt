@@ -1,0 +1,28 @@
+.586
+.MODEL FLAT
+INCLUDE io.h
+.STACK 4096
+.DATA
+Promt BYTE "the parimeter is",0
+p1 BYTE "enter the lenght",0
+p2 BYTE "entre the width",0
+len DWORD 40 DUP(?)
+wid DWORD 40 DUP(?)
+par DWORD 40 DUP(?)
+
+.CODE
+MainProc PROC
+input p1,par,40
+atod par
+mov len,eax
+input p2,par,40
+atod par
+mov wid,eax
+add eax,wid
+imul eax,2
+dtoa par,eax
+output promt ,par
+mov eax,0
+ret
+MainProc ENDP
+END
