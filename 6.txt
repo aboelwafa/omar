@@ -1,0 +1,118 @@
+.586
+.MODEL FLAT
+include io.h
+.STACK 4096
+.DATA
+	  mes1_out byte "result of sum = ",0
+	  mes2_out byte "result of sum of weight = ",0
+	  mes3_out byte "average =",0
+	  mes4_out byte "reminder=",0
+	  mes1 BYTE "enter grade : 1 ",0
+	  mes2 BYTE "enter grade : 2 ",0
+	  mes3 BYTE "enter grade : 3 ",0
+	  mes4 BYTE "enter grade : 4 ",0
+	  mes11 BYTE "enter weight grade : 1 ",0
+	  mes22 BYTE "enter weight grade : 2 ",0
+	  mes33 BYTE "enter weight grade : 3 ",0
+	  mes44 BYTE "enter weight grade : 4 ",0
+	     g1  DD 40 DUP(?)
+		 g2  DD 40 DUP(?)
+		 g3  DD 40 DUP(?)
+		 g4  DD 40 DUP(?)
+		 w1  DD 40 DUP(?)
+		 w2  DD 40 DUP(?)
+		 w3  DD 40 DUP(?)
+		 w4  DD 40 DUP(?)
+		  weightsum  DWORD  40 DUP(?)
+		 sum_of_weight DWORD  40 DUP(?)
+		 sum_of_weight2 DWORD  40 DUP(?)
+		  weightsum2 DWORD  40 DUP(?)
+		 avg DWORD  40 DUP(?)
+		 re DD 40 DUP(?)
+
+.CODE
+MainProc   PROC
+
+		input mes1,g1,40
+		atod g1
+		mov  weightsum,eax
+		input mes11,w1,40
+		atod w1
+		mov w1,eax
+		mov sum_of_weight,eax
+		mov eax, weightsum
+		imul eax,w1
+		mov   weightsum,eax
+
+		input mes2,g2,40
+		atod g2
+		mov g2,eax
+		input mes22,w2,40
+		atod w2
+		mov w2,eax
+		imul  eax,g2
+		add eax, weightsum
+		mov  weightsum,eax
+		mov eax,sum_of_weight
+		add eax,w2
+		mov sum_of_weight,eax
+
+		input mes3,g3,40
+		atod g3
+		mov g3,eax
+		input mes33,w3,40
+		atod w3
+		mov w3,eax
+		imul  eax,g3
+		add eax, weightsum
+		mov  weightsum,eax
+		mov eax,sum_of_weight
+		add eax,w3
+		mov sum_of_weight,eax
+
+		input mes4,g4,40
+		atod g4
+		mov g4,eax
+		input mes44,w4,40
+		atod w4
+		mov w4,eax
+		imul  eax,g4
+		add eax, weightsum
+		mov  weightsum,eax
+		mov eax,sum_of_weight
+		add eax,w4
+		mov sum_of_weight,eax
+
+		mov  eax ,weightsum
+		mov  weightsum2,eax
+		dtoa  weightsum,eax
+		output mes1_out, weightsum      ;sum = weight*grade+....
+		
+		mov eax,sum_of_weight
+		mov sum_of_weight2,eax
+		dtoa sum_of_weight,eax
+		output mes2_out,sum_of_weight    ;number of clock
+
+	; to calcolate average 
+
+	mov edx,0
+	mov eax, weightsum2
+	mov  ebx,sum_of_weight2
+	CDQ
+	div ebx
+	 mov avg,eax
+	 mov re,edx
+	dtoa weightsum2,eax
+	output mes3_out,weightsum2
+
+	mov eax,re
+	dtoa re,eax
+	output mes4_out,re
+
+	
+	
+mov eax ,0
+RET 
+MainProc   ENDP
+END
+  
