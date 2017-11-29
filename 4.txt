@@ -1,0 +1,114 @@
+.586
+.MODEL FLAT
+INCLUDE io.h
+.STACK 4096
+.DATA
+
+	  mes1_out byte "result of total = ",0
+	  mes2_out byte "number of all coins =",0
+	  mes3_out byte "coins by dollar =",0
+	  mes4_out byte "reminder is =",0
+	  x1 BYTE "enter numer of pennies ",0
+	  x2 BYTE  "enter numer of nickels ",0
+	  x3 BYTE  "enter numer of dimes ",0
+	  x4 BYTE  "enter numer of quarters ",0
+	  x5 BYTE  "enter numer of fifity_cents",0
+	  x6 BYTE  "enter numer of dollers",0
+	    p  DWORD 40 DUP(?)      ; p=pienns =1
+		 n  DWORD 40 DUP(?)	  ; n=nickels =5
+		 d_i  DWORD 40 DUP(?)	  ; di=dimes=10
+		 q  DWORD 40 DUP(?)	  ; q=quarters =25
+		 f  DWORD 40 DUP(?)	  ; f=fifty_cents=50
+		 d  DWORD 40 DUP(?)      ; d=100
+		 
+		 sum_of_coins DWORD 40 DUP(?)
+		 totalcoins   DWORD 40 DUP(?)
+		 sumdollar DWORD 40 DUP(?)
+		 re DWORD 40 DUP(?)
+.CODE
+MainProc PROC
+input x1,p,40
+atod p
+mov p,eax
+mov sum_of_coins,eax
+mov totalcoins,eax
+input x2,n,40
+atod n
+mov n,eax
+imul eax,5
+add  eax,totalcoins
+mov totalcoins,eax
+mov eax,sum_of_coins
+add eax,n
+mov sum_of_coins,eax
+input x3,d_i,40
+atod d_i
+mov d_i,eax
+imul eax,10
+add  eax,totalcoins
+mov totalcoins,eax
+mov eax,sum_of_coins
+add eax,d_i
+mov sum_of_coins,eax
+input x4,q,40
+		atod q
+		mov q,eax
+		imul eax,25
+		add  eax,totalcoins
+		mov totalcoins,eax
+		mov eax,sum_of_coins
+		add eax,q
+		mov sum_of_coins,eax
+		
+		input x5,f,40
+		atod f
+		mov f,eax
+		imul eax,50
+		add  eax,totalcoins
+		mov totalcoins,eax
+		mov eax,sum_of_coins
+		add eax,f
+		mov sum_of_coins,eax
+			
+		input x6,d,40
+		atod d
+		mov d,eax
+		imul eax,100
+		add  eax,totalcoins
+		mov totalcoins,eax
+		mov eax,sum_of_coins
+		add eax,d
+		mov sum_of_coins,eax
+		;/////////////////////////////
+	   mov eax,totalcoins
+	    mov sumdollar,eax
+	   dtoa totalcoins,eax
+	   output mes1_out,totalcoins    ; the sum of coins by cents
+
+	   
+	   mov eax,sum_of_coins
+	   
+	   dtoa sum_of_coins,eax
+	   output mes2_out,sum_of_coins   ; the number of coins that have been entered
+
+	   ; to calcolate by dollar
+		 mov eax,0
+	   mov eax,sumdollar
+	   mov ebx,100
+	   mov edx,0
+	   
+	   cdq
+	   Idiv ebx
+	 
+	  
+	   dtoa sumdollar,eax
+	   output mes3_out ,sumdollar
+
+	   mov re,edx
+	   mov eax,re
+	   dtoa re,eax
+	   output mes4_out,re
+mov eax,0
+ret
+MainProc ENDP
+END
